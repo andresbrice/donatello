@@ -1,19 +1,53 @@
-* {
+*,
+*::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box !important;
 }
 
+body {
+  background-color: #f3f2ef !important;
+}
 
 .hero {
   width: 100%;
-  min-height: 50vh;
-  background-color: #2f7e27;
+  min-height: 60vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
+
+  background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.8)), url(../img/hero.jpg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+.carrito {
+  position: relative;
+  background-color: #fff;
+  color: #212529;
+  font-size: 24px;
+  padding: 2px;
+  border-radius: 4px;
+}
+
+.carrito:hover {
+  cursor: pointer
+}
+
+.sumaCarrito {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  font-size: 14px;
+  background-color: red;
+  color: white;
+  width: 1.2rem;
+  text-align: center;
+  border-radius: 50%;
 }
 
 .imagen-producto {
@@ -31,7 +65,7 @@
   justify-content: center;
   margin-top: 3rem;
   grid-auto-rows: 15em;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 25rem), 1fr));
+  grid-template-columns: repeat(auto-fills, minmax(min(100%, 25rem), 1fr));
 
   box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.473);
   -webkit-box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.473);
@@ -40,7 +74,6 @@
 }
 
 .card-body {
-
   text-align: center;
   min-height: auto;
 }
