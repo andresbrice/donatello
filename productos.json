@@ -1,0 +1,98 @@
+[
+  {
+    "id": 1,
+    "nombre": "Pizza Mozzarella",
+    "descripcion": "Pizza grande de mozzarella",
+    "precio": 1950,
+    "imagen": "assets/img/pizzaMozzarella.jpg",
+    "cantidad": 1
+  },
+  {
+    "id": 2,
+    "nombre": "Pizza Especial",
+    "descripcion": "Pizza grande de jamón y morrón",
+    "precio": 2180,
+    "imagen": "assets/img/pizzaEspecial.jpg",
+    "cantidad": 1
+  },
+  {
+    "id": 3,
+    "nombre": "Pizza Rúcula",
+    "descripcion": "Pizza grande de rúcula",
+    "precio": 1950,
+    "imagen": "assets/img/pizzaRucula.jpg",
+    "cantidad": 1
+  },
+  {
+    "id": 4,
+    "nombre": "Pizza Fugazzeta",
+    "descripcion": "Pizza grande de fugazzeta",
+    "precio": 2810,
+    "imagen": "assets/img/pizzaFugazzeta.jpg",
+    "cantidad": 1
+  },
+  {
+    "id": 5,
+    "nombre": "Pizza Napolitana",
+    "descripcion": "Pizza grande de Napolitana",
+    "precio": 2000,
+    "imagen": "assets/img/pizzaNapolitana.jpg",
+    "cantidad": 1
+  },
+  {
+    "id": 6,
+    "nombre": "Pizza Calabresa",
+    "descripcion": "Pizza grande Calabresa",
+    "precio": 2500,
+    "imagen": "assets/img/pizzaCalabresa.jpg",
+    "cantidad": 1
+  },
+  {
+    "id": 7,
+    "nombre": "Empanadas de Jamón y Queso",
+    "descripcion": "Docena",
+    "precio": 2500,
+    "imagen": "assets/img/empanadas.jpg",
+    "cantidad": 1
+  },
+  {
+    "id": 8,
+    "nombre": "Empanadas de Carne",
+    "descripcion": "Docena",
+    "precio": 2500,
+    "imagen": "assets/img/empanadas.jpg",
+    "cantidad": 1
+  },
+  {
+    "id": 9,
+    "nombre": "Empanadas de Pollo",
+    "descripcion": "Docena",
+    "precio": 2500,
+    "imagen": "assets/img/empanadas.jpg",
+    "cantidad": 1
+  },
+  {
+    "id": 10,
+    "nombre": "Faina",
+    "descripcion": "Porcion",
+    "precio": 180,
+    "imagen": "assets/img/faina.jpg",
+    "cantidad": 1
+  },
+  {
+    "id": 11,
+    "nombre": "Gaseosa Coca Cola",
+    "descripcion": "2 lts",
+    "precio": 500,
+    "imagen": "assets/img/gaseosa.jpg",
+    "cantidad": 1
+  },
+  {
+    "id": 12,
+    "nombre": "Cerveza Heineken",
+    "descripcion": "1 lt",
+    "precio": 300,
+    "imagen": "assets/img/cerveza.jpg",
+    "cantidad": 1
+  }
+]
