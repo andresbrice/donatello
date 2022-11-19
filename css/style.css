@@ -62,7 +62,6 @@ body {
 .card {
   display: grid;
   gap: 4em;
-  justify-content: center;
   margin-top: 3rem;
   grid-auto-rows: 15em;
   min-height: auto;
@@ -84,13 +83,10 @@ body {
   margin-bottom: .5rem;
 }
 
-.bi-plus-circle,
-.bi-dash-circle {
-  cursor: pointer;
-}
 
-#mas,
-#menos {
+.decrementar,
+.incrementar {
   border: none;
   background-color: #fff;
+  cursor: pointer;
 }

@@ -1,35 +1,33 @@
 //Donatello: donde tus antojos se hacen realidad
 
 const arrayProductos = [];
-const carrito = [];
-const mas = document.getElementById(`mas`);
-const menos = document.getElementById(`menos`);
+let carrito = [];
 const productosContainer = document.getElementById("productosContainer");
 const carritoContainer = document.getElementById("carritoContainer");
 const vaciarCarrito = document.getElementById("vaciarCarrito");
 const total = document.getElementById("total");
+// const { id, nombre, descripcion, precio, imagen, cantidad } = producto;
+
+// if (localStorage.getItem("carrito")) {
+//   carrito = JSON.parse(localStorage.getItem("carrito"));
+// }
 
 const obtenerProductos = async () => {
-  try {
-    const response = await fetch("productos.json");
-    if (!response.ok) throw new Error("WARN", response.status);
-    const data = await response.json();
-    mostrarProductos(data);
-  } catch (error) {
-    console.log(error);
-  }
+  const response = await fetch("productos.json");
+  if (!response.ok) throw new Error("WARN", response.status);
+  const data = await response.json();
+  mostrarProductos(data);
 };
 
 obtenerProductos();
 
 const mostrarProductos = (productos) => {
-  try {
-    productos.forEach((producto) => {
-      arrayProductos.push(producto);
-      const { id, nombre, descripcion, precio, imagen } = producto;
-      const card = document.createElement("div");
-      card.classList.add("col-xl-3", "col-md-6", "col-xs-12");
-      card.innerHTML = `
+  productos.forEach((producto) => {
+    arrayProductos.push(producto);
+    const { id, nombre, descripcion, precio, imagen } = producto;
+    const card = document.createElement("div");
+    card.classList.add("col-xl-3", "col-md-6", "col-xs-12");
+    card.innerHTML = `
         <div class="card">
           <img src="${imagen}" class="card-img-top imagen-producto" alt="${nombre}">
           <div class="card-body">
@@ -41,29 +39,26 @@ const mostrarProductos = (productos) => {
         </div>
       `;
 
-      productosContainer.appendChild(card);
+    productosContainer.appendChild(card);
 
-      const boton = document.getElementById(`boton${id}`);
+    const boton = document.getElementById(`boton${id}`);
 
-      boton.onclick = () => {
-        Toastify({
-          text: `Se agrego el producto al carrito`,
-          duration: 3000,
-          close: true,
-          gravity: "top",
-          position: "left",
-          stopOnFocus: true,
-          style: {
-            background: "green",
-          },
-        }).showToast();
+    boton.onclick = () => {
+      Toastify({
+        text: `Se agrego el producto al carrito`,
+        duration: 1000,
+        close: true,
+        gravity: "top",
+        position: "left",
+        stopOnFocus: true,
+        style: {
+          background: "green",
+        },
+      }).showToast();
 
-        agregarAlCarrito(id);
-      };
-    });
-  } catch (error) {
-    console.log(error);
-  }
+      agregarAlCarrito(id);
+    };
+  });
 };
 
 // let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
@@ -95,7 +90,17 @@ const mostrarCarrito = () => {
       <div class="card-body">
       <h4 class="card-title">${nombre}</h3>
         <p class="card-text">${descripcion}</p>
-        <p class="card-text"> <button id="menos"><i class="bi bi-dash-circle" ></i></button> ${cantidad} <button id="mas"><i class="bi bi-plus-circle"></i></button></p>
+        <p class="card-text"> 
+          <button class="decrementar" id="decrementar${id}">
+            <i class="bi bi-dash-circle" ></i>
+          </button> 
+          
+          <span class="cantidad">${cantidad}</span> 
+          
+          <button class="incrementar" id="aumentar${id}">
+            <i class="bi bi-plus-circle"></i>
+          </button>
+        </p>
         <h5 class="card-text">$${precio * cantidad}</h5>
         <button class="btn btn-danger my-3" id="eliminar${id}">Eliminar</button>
       </div>
@@ -104,12 +109,50 @@ const mostrarCarrito = () => {
 
     carritoContainer.appendChild(card);
 
-    const boton = document.getElementById(`eliminar${id}`);
-    boton.onclick = () => {
+    const aumentar = document.getElementById(`aumentar${id}`);
+    aumentar.onclick = () => {
+      aumentarCantidad(producto.id);
+    };
+
+    const decrementar = document.getElementById(`decrementar${id}`);
+    decrementar.onclick = () => {
+      decrementarCantidad(producto.id);
+    };
+
+    const eliminar = document.getElementById(`eliminar${id}`);
+    eliminar.onclick = () => {
+      Toastify({
+        text: `Se elimino el producto del carrito`,
+        duration: 1000,
+        close: true,
+        gravity: "top",
+        position: "left",
+        stopOnFocus: true,
+        style: {
+          background: "red",
+        },
+      }).showToast();
+
       eliminarProducto(producto.id);
     };
   });
   calcularTotal();
+};
+
+const aumentarCantidad = (id) => {
+  const producto = arrayProductos.find((producto) => producto.id === id);
+  producto.cantidad++;
+  mostrarCarrito();
+};
+
+const decrementarCantidad = (id) => {
+  const producto = arrayProductos.find((producto) => producto.id === id);
+  if (producto.cantidad > 1) {
+    producto.cantidad--;
+  } else {
+    eliminarProducto(id);
+  }
+  mostrarCarrito();
 };
 
 const eliminarProducto = (id) => {
@@ -127,7 +170,7 @@ vaciarCarrito.onclick = () => {
 const eliminarTodoElCarrito = () => {
   carrito.splice(0, carrito.length);
   mostrarCarrito();
-  // localStorage.clear();
+  localStorage.clear();
 };
 
 const calcularTotal = () => {
@@ -137,15 +180,4 @@ const calcularTotal = () => {
     totalCompra += precio * cantidad;
   });
   total.innerHTML = `$${totalCompra}`;
-};
-
-// funcion para aumentar la cantidad del producto en el carrito
-
-const aumentar = () => {
-  mas.onclick = () => {
-    console.log("suma");
-    // aumentar(id);
-  };
-  const producto = arrayProductos.find((producto) => producto.id === id);
-  producto.cantidad++;
 };
