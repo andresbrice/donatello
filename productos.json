@@ -19,7 +19,7 @@
     "id": 3,
     "nombre": "Pizza Rúcula",
     "descripcion": "Pizza grande de rúcula",
-    "precio": 1950,
+    "precio": 2000,
     "imagen": "assets/img/pizzaRucula.jpg",
     "cantidad": 1
   },
@@ -27,7 +27,7 @@
     "id": 4,
     "nombre": "Pizza Fugazzeta",
     "descripcion": "Pizza grande de fugazzeta",
-    "precio": 2810,
+    "precio": 2500,
     "imagen": "assets/img/pizzaFugazzeta.jpg",
     "cantidad": 1
   },

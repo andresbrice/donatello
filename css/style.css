@@ -73,6 +73,14 @@ body {
   border-radius: 2em;
 }
 
+.card-carrito {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 12rem;
+}
+
 .card-body {
   text-align: center;
   min-height: auto;
@@ -81,6 +89,10 @@ body {
 .card-text {
   font-size: 1.5em;
   margin-bottom: .5rem;
+}
+
+.descripcion {
+  font-size: 1rem;
 }
 
 

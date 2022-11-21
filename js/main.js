@@ -1,16 +1,42 @@
 //Donatello: donde tus antojos se hacen realidad
-
+// TODO: hacer contador de productos en boton carrito
 const arrayProductos = [];
 let carrito = [];
 const productosContainer = document.getElementById("productosContainer");
-const carritoContainer = document.getElementById("carritoContainer");
-const vaciarCarrito = document.getElementById("vaciarCarrito");
+const tbody = document.getElementById("tbody");
+const abrirCarrito = document.getElementById("abrirCarrito");
+const finalizar = document.getElementById("finalizar");
 const total = document.getElementById("total");
-// const { id, nombre, descripcion, precio, imagen, cantidad } = producto;
 
-// if (localStorage.getItem("carrito")) {
-//   carrito = JSON.parse(localStorage.getItem("carrito"));
-// }
+// EVENTOS
+abrirCarrito.onclick = () => {
+  mostrarCarrito();
+  deshabilitarBoton();
+};
+
+finalizar.onclick = () => {
+  Swal.fire({
+    title: "¿Está seguro?",
+    text: "En caso de no estarlo recomendamos cancelar la operación y revisar el carrito nuevamente",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Finalizar",
+    cancelButtonText: "Cancelar",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      Swal.fire({
+        timer: 1500,
+        title: "¡Pedido realizado con éxito!",
+        text: "Pronto llegará a tu dirección",
+        icon: "success",
+        showConfirmButton: false,
+      });
+      carrito = [];
+    }
+  });
+};
 
 const obtenerProductos = async () => {
   const response = await fetch("productos.json");
@@ -24,30 +50,32 @@ obtenerProductos();
 const mostrarProductos = (productos) => {
   productos.forEach((producto) => {
     arrayProductos.push(producto);
+
     const { id, nombre, descripcion, precio, imagen } = producto;
+
     const card = document.createElement("div");
+
     card.classList.add("col-xl-3", "col-md-6", "col-xs-12");
     card.innerHTML = `
-        <div class="card">
-          <img src="${imagen}" class="card-img-top imagen-producto" alt="${nombre}">
-          <div class="card-body">
-            <h4 class="card-title">${nombre}</h3>
-            <p class="card-text">${descripcion}</p>
-            <h5 class="card-text">$${precio}</h5>
-            <button class="btn btn-success my-3" id="boton${id}">Añadir</button>
-          </div>
+      <div class="card">
+        <img src="${imagen}" class="card-img-top imagen-producto" alt="${nombre}">
+        <div class="card-body">
+          <h4 class="card-title">${nombre}</h3>
+          <p class="card-text descripcion">${descripcion}</p>
+          <h5 class="card-text">$${precio}</h5>
+          <button class="btn btn-success my-3" id="agregar${id}">Añadir</button>
         </div>
-      `;
+      </div>
+    `;
 
     productosContainer.appendChild(card);
 
-    const boton = document.getElementById(`boton${id}`);
+    const agregar = document.getElementById(`agregar${id}`);
 
-    boton.onclick = () => {
+    agregar.onclick = () => {
       Toastify({
         text: `Se agrego el producto al carrito`,
         duration: 1000,
-        close: true,
         gravity: "top",
         position: "left",
         stopOnFocus: true,
@@ -61,53 +89,51 @@ const mostrarProductos = (productos) => {
   });
 };
 
-// let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-
 const agregarAlCarrito = (id) => {
   const producto = arrayProductos.find((producto) => producto.id === id);
   const existeProducto = carrito.find((producto) => producto.id === id);
 
   if (existeProducto) {
     existeProducto.cantidad++;
-    mostrarCarrito();
   } else {
     carrito.push(producto);
-    mostrarCarrito();
-    // localStorage.setItem("carrito", JSON.stringify(carrito));
   }
+  mostrarCarrito();
+  deshabilitarBoton();
+  console.log(carrito);
 };
 
 const mostrarCarrito = () => {
-  carritoContainer.innerHTML = ""; //Para evitar duplicidad en carrito
-
+  tbody.innerHTML = "";
   carrito.forEach((producto) => {
-    const { id, nombre, descripcion, precio, imagen, cantidad } = producto;
-    const card = document.createElement("div");
-    card.classList.add("col-xl-3", "col-md-6", "col-xs-12");
-    card.innerHTML = `
-    <div class="card">
-      <img src="${imagen}" class="card-img-top imagen-producto" alt="${nombre}">
-      <div class="card-body">
-      <h4 class="card-title">${nombre}</h3>
-        <p class="card-text">${descripcion}</p>
-        <p class="card-text"> 
-          <button class="decrementar" id="decrementar${id}">
-            <i class="bi bi-dash-circle" ></i>
-          </button> 
-          
-          <span class="cantidad">${cantidad}</span> 
-          
-          <button class="incrementar" id="aumentar${id}">
-            <i class="bi bi-plus-circle"></i>
-          </button>
-        </p>
-        <h5 class="card-text">$${precio * cantidad}</h5>
-        <button class="btn btn-danger my-3" id="eliminar${id}">Eliminar</button>
-      </div>
-    </div>
+    const { id, nombre, precio, cantidad } = producto;
+
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>
+        ${nombre}
+      </td>
+      <td>
+        <button class="decrementar" id="decrementar${id}">
+          <i class="bi bi-dash-circle"></i>
+        </button>
+        
+        <span class="cantidad">${cantidad}</span>
+        
+        <button class="incrementar" id="aumentar${id}">
+          <i class="bi bi-plus-circle"></i>
+        </button>
+      </td>
+      <td>
+        ${precio * cantidad}
+      </td>
+      <td>
+        <button type="button" id="eliminar${id}" class="btn-close" 
+        aria-label="Close"></button>
+      </td>
     `;
 
-    carritoContainer.appendChild(card);
+    tbody.appendChild(tr);
 
     const aumentar = document.getElementById(`aumentar${id}`);
     aumentar.onclick = () => {
@@ -124,7 +150,6 @@ const mostrarCarrito = () => {
       Toastify({
         text: `Se elimino el producto del carrito`,
         duration: 1000,
-        close: true,
         gravity: "top",
         position: "left",
         stopOnFocus: true,
@@ -134,6 +159,8 @@ const mostrarCarrito = () => {
       }).showToast();
 
       eliminarProducto(producto.id);
+
+      mostrarCarrito();
     };
   });
   calcularTotal();
@@ -159,18 +186,9 @@ const eliminarProducto = (id) => {
   const producto = arrayProductos.find((producto) => producto.id === id);
   const index = carrito.indexOf(producto);
   carrito.splice(index, 1);
+  producto.cantidad = 1;
   mostrarCarrito();
-  // localStorage.setItem("carrito", JSON.stringify(carrito));
-};
-
-vaciarCarrito.onclick = () => {
-  eliminarTodoElCarrito();
-};
-
-const eliminarTodoElCarrito = () => {
-  carrito.splice(0, carrito.length);
-  mostrarCarrito();
-  localStorage.clear();
+  deshabilitarBoton();
 };
 
 const calcularTotal = () => {
@@ -180,4 +198,10 @@ const calcularTotal = () => {
     totalCompra += precio * cantidad;
   });
   total.innerHTML = `$${totalCompra}`;
+};
+
+const deshabilitarBoton = () => {
+  carrito.length > 0
+    ? (finalizar.disabled = false)
+    : (finalizar.disabled = true);
 };
