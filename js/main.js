@@ -16,26 +16,13 @@ abrirCarrito.onclick = () => {
 
 finalizar.onclick = () => {
   Swal.fire({
-    title: "¿Está seguro?",
-    text: "En caso de no estarlo recomendamos cancelar la operación y revisar el carrito nuevamente",
-    icon: "warning",
-    showCancelButton: true,
-    confirmButtonColor: "#3085d6",
-    cancelButtonColor: "#d33",
-    confirmButtonText: "Finalizar",
-    cancelButtonText: "Cancelar",
-  }).then((result) => {
-    if (result.isConfirmed) {
-      Swal.fire({
-        timer: 1500,
-        title: "¡Pedido realizado con éxito!",
-        text: "Pronto llegará a tu dirección",
-        icon: "success",
-        showConfirmButton: false,
-      });
-      carrito = [];
-    }
+    timer: 3000,
+    title: "¡Pedido realizado con éxito!",
+    text: "Pronto llegará a tu dirección",
+    icon: "success",
+    showConfirmButton: false,
   });
+  carrito = [];
 };
 
 const obtenerProductos = async () => {
