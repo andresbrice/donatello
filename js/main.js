@@ -16,7 +16,7 @@ abrirCarrito.onclick = () => {
 
 finalizar.onclick = () => {
   Swal.fire({
-    timer: 3000,
+    // timer: 3000,
     title: "¡Pedido realizado con éxito!",
     text: "Pronto llegará a tu dirección",
     icon: "success",
