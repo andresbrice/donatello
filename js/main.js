@@ -1,5 +1,5 @@
 //Donatello: donde tus antojos se hacen realidad
-// TODO: hacer contador de productos en boton carrito
+
 const arrayProductos = [];
 let carrito = [];
 const productosContainer = document.getElementById("productosContainer");
